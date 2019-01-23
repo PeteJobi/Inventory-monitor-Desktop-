@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="Inventory_monitor.UserControls.ResControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Inventory_monitor.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="500">
+    <Button Name="resBut" Template="{StaticResource emptyBut}" Height="{StaticResource resButHeight}" Margin="10,0,10,10"
+                 Click="ResBut_Click">
+        <Border Name="back" CornerRadius="{StaticResource resCornerRad}">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Background" Value="White"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=resBut}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource hoverColour}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsPressed, ElementName=resBut}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource clickColour}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource selectedResColour}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMoving}" Value="True">
+                            <Setter Property="Background" Value="{StaticResource movingResColour}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect Direction="240" Opacity="0.4" ShadowDepth="2"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding Height, ElementName=resBut}"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Border Name="mask" Background="AliceBlue" CornerRadius="{StaticResource resCornerRadHalf}"/>
+                    <Image Name="image" Source="{Binding Image}" Stretch="UniformToFill" HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=mask}"/>
+                    </Grid.OpacityMask>
+                </Grid>
+                <Grid Grid.Column="1" Margin="10,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Title}" FontFamily="../Fonts/ADOBEHEITISTD-REGULAR.OTF#Adobe Heiti Std R" FontSize="25" TextTrimming="CharacterEllipsis"/>
+                        <Image Grid.Column="1" Source="..\Icons\pin_black.png"
+                           HorizontalAlignment="Right" VerticalAlignment="Top" Width="20" Margin="0,10,10,0">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <TextBlock Text="{StaticResource lastTransaction}" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding GetLastTransaction.NumberTransacted}" FontSize="16"/>
+                                    <Image Height="20" Source="{Binding GetLastTransaction.SmallTransImage}"/>
+                                    <TextBlock Text="{Binding GetLastTransaction.ShortTransactionDate}" FontSize="16"/>
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasTransactions}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Description}" FontSize="16" Height="25" HorizontalAlignment="Left"
+                                   TextTrimming="CharacterEllipsis">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasTransactions}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                        <TextBlock Grid.Column="1" Text="{Binding GetStock}" VerticalAlignment="Bottom" FontSize="23" FontWeight="DemiBold"
+                                   Margin="5"/>
+                    </Grid>
+                    
+                </Grid>
+            </Grid>
+        </Border>
+    </Button>
+</UserControl>

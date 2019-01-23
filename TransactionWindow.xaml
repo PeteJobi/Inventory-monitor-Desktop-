@@ -1,0 +1,62 @@
+﻿<Window x:Class="Inventory_monitor.Views.TransactionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inventory_monitor.Views"
+        mc:Ignorable="d"
+        Title="Make a transaction" Height="550" Width="450" WindowStartupLocation="CenterScreen" Icon="../hdinventorymonitoricon.ico">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Image Name="transImage" Margin="10">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="Source" Value="..\Icons\out_big.png"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="False">
+                            <Setter Property="Source" Value="..\Icons\in_big.png"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <TextBlock Grid.Row="1" Foreground="{StaticResource themeColour}" HorizontalAlignment="Left" 
+                   FontWeight="DemiBold">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Text" Value="Number of items to remove"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="False">
+                            <Setter Property="Text" Value="Number of items to add"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBox Grid.Row="2" Background="Transparent" Name="transNumText" FontSize="28" Style="{StaticResource emptyText}"
+                                     FontFamily="Adobe Heiti Std R" MinWidth="50" VerticalAlignment="Bottom" TextChanged="TransNumText_TextChanged"/>
+        <TextBlock Grid.Row="3" Text="Your input has to be numeric" Foreground="Red" HorizontalAlignment="Left" FontSize="20" 
+                       VerticalAlignment="Top" Name="numError"/>
+        <TextBlock Grid.Row="4" Text="Comments" Foreground="{StaticResource themeColour}" HorizontalAlignment="Left" 
+                   FontWeight="DemiBold"/>
+        <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto">
+            <TextBox Background="Transparent" Name="commentText" FontSize="20" Style="{StaticResource emptyText}"
+              FontFamily="Adobe Heiti Std R" MinWidth="50" VerticalContentAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap"/>
+        </ScrollViewer>
+        <Button Grid.Row="6" Template="{StaticResource acButTemplate}" Width="Auto" HorizontalAlignment="Center" Click="SaveTransaction">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\Icons\ok.png" Margin="0,0,5,0"/>
+                <TextBlock Text="Add transaction" Foreground="{StaticResource themeColour}" FontSize="20" VerticalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

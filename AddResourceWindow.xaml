@@ -1,0 +1,100 @@
+﻿<Window x:Class="Inventory_monitor.Views.AddResourceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Inventory_monitor.Views"
+        mc:Ignorable="d"
+        Title="Add a resource" Height="500" Width="700" WindowStartupLocation="CenterScreen" Icon="../hdinventorymonitoricon.ico">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="225"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Source={StaticResource detailImageHeight}}"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding Source={StaticResource detailImageHeight}}"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Name="detailImageBut" Template="{StaticResource emptyBut}" Click="ViewImage">
+                <Grid>
+                    <Border Name="mask" Background="AliceBlue" CornerRadius="{StaticResource resCornerRad}"/>
+                    <Grid>
+                        <Image Name="image" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="..\Icons\resource.png"/>
+                            </Image.Source>
+                        </Image>
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=mask}"/>
+                        </Grid.OpacityMask>
+                    </Grid>
+                    <Border CornerRadius="{StaticResource resCornerRad}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=detailImageBut}" Value="True">
+                                        <Setter Property="Background" Value="#22000000"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                </Grid>
+            </Button>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Button Template="{StaticResource icoBigButTemplate}" ToolTip="Pick image" Click="PickImage">
+                    <Image Source="..\Icons\edit.png"/>
+                </Button>
+                <Button Template="{StaticResource icoBigButTemplate}" ToolTip="Remove image" Visibility="Visible"
+                        Name="removeImage" Click="RemoveImage">
+                    <Image Source="..\Icons\remove.png"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1" Margin="10,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Text="{StaticResource resourceName}" Foreground="{StaticResource themeColour}" HorizontalAlignment="Left" FontWeight="DemiBold"/>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <TextBox Background="Transparent" Name="resourceNameText" FontSize="28" Style="{StaticResource emptyText}"
+                                     FontFamily="Adobe Heiti Std R" MinWidth="50" VerticalAlignment="Bottom" TextChanged="ResourceNameText_TextChanged"/>
+            </ScrollViewer>
+            <TextBlock Grid.Row="2" Text="Name of resource cannot be empty" Foreground="Red" HorizontalAlignment="Left" FontSize="20" 
+                       VerticalAlignment="Top" Name="nameError"/>
+            <TextBlock Grid.Row="3" Text="{StaticResource initialQuantity}" Foreground="{StaticResource themeColour}" 
+                       HorizontalAlignment="Left" FontWeight="DemiBold"/>
+            <TextBox Grid.Row="4" Background="Transparent" Name="quantityText" FontSize="25" Style="{StaticResource emptyText}"
+                                     Height="50" FontFamily="Adobe Heiti Std R" MinWidth="50" VerticalAlignment="Bottom"/>
+            <TextBlock Grid.Row="5" Text="Initial quantity must be numeric and greater than zero" Foreground="Red" Name="quantityError"
+                       HorizontalAlignment="Left" FontSize="20" 
+                       VerticalAlignment="Top"/>
+        </Grid>
+        <TextBlock Grid.Row="1" Text="{StaticResource description}" Foreground="{StaticResource themeColour}" 
+                       HorizontalAlignment="Left" FontWeight="DemiBold"/>
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
+            <TextBox Background="Transparent" Name="descriptionText" FontSize="20" Style="{StaticResource emptyText}"
+              FontFamily="Adobe Heiti Std R" MinWidth="50" VerticalContentAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5"/>
+        </ScrollViewer>
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Template="{StaticResource acButTemplate}" Width="Auto" HorizontalAlignment="Center"
+                Click="SaveResource">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="..\Icons\ok.png" Margin="0,0,5,0"/>
+                <TextBlock Text="Add resource" Foreground="{StaticResource themeColour}" FontSize="20" VerticalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>
